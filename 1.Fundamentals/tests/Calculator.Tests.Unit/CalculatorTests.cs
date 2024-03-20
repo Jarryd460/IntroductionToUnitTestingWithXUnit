@@ -41,6 +41,22 @@ public sealed class CalculatorTests : IDisposable, IAsyncLifetime
         Assert.Equal(5, result);
     }
 
+    [Theory(/*Skip = "Can skip can theory level also"*/)]
+    [InlineData(5, 2, 10, Skip = "This is just a test")]
+    [InlineData(3, 2, 6)]
+    [InlineData(0, 2, 0)]
+    public void Multiply_Should_MultiplyTwoNumbers_When_TwoNumbersAreIntegers(int a, int b, int expected)
+    {
+        // Arrange
+        var calculator = new Calculator();
+
+        // Act
+        var result = calculator.Multiply(a, b);
+
+        // Assert
+        Assert.Equal(expected, result);
+    }
+
     // Used to cleanup any resources
     public void Dispose()
     {
