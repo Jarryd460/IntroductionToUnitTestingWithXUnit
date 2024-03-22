@@ -1,4 +1,5 @@
-﻿namespace TestingTechniques;
+﻿
+namespace TestingTechniques;
 
 public sealed class Calculator
 {
@@ -17,8 +18,18 @@ public sealed class Calculator
         return a * b;
     }
 
-    public int Divide(int a, int b)
+    public float Divide(float a, float b)
     {
+        EnsureThatDivisorIsNotZero(b);
+
         return a / b;
+    }
+
+    private static void EnsureThatDivisorIsNotZero(float b)
+    {
+        if (b == 0)
+        {
+            throw new DivideByZeroException();
+        }
     }
 }
