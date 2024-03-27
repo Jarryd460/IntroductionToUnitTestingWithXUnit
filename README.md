@@ -1,4 +1,4 @@
-# IntroductionToUnitTestingWithXUnit
+# IntroductionToUnitTestingWithXUnit 
 
 ### Description
 An introduction to unit testing with xunit following [Nick Chapsas: Dometrain - From Zero to Hero Unit testing for](C#https://dometrain.com/course/from-zero-to-hero-unit-testing-in-c/).
@@ -20,3 +20,10 @@ Learn the basics of unit testing such as:
 * Structuring of solution.
 
 ##### TestingTechniques
+Writing unit tests for testing strings, numbers, dates, objects, enumerables, 
+thrown exceptions, raised events and private and internal methods.
+
+##### Concepts
+Learn how to test methods that have dependencies using Fakers and Mocking with
+NSubstitute.
+	* NSubstitute is prefered as it's syntax is less convoluted.
