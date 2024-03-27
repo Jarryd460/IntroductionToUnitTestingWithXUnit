@@ -27,3 +27,7 @@ thrown exceptions, raised events and private and internal methods.
 Learn how to test methods that have dependencies using Fakers and Mocking with
 NSubstitute.
 	* NSubstitute is prefered as it's syntax is less convoluted.
+
+##### RealWorld
+Learn how to test service layer and static and extention methods such 
+as logging by creating an Adapter.
