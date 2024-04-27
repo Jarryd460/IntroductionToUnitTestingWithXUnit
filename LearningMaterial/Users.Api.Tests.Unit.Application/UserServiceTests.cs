@@ -97,32 +97,30 @@ public class UserServiceTests
     public async Task GetByIdAsync_Should_ReturnUser_When_UserExists()
     {
         // Arrange
-        var userId = Guid.NewGuid();
         var user = new User()
         {
-            Id = userId,
+            Id = Guid.NewGuid(),
             FullName = "Jarryd Deane"
         };
 
-        _userRepository.GetByIdAsync(userId).Returns(user);
+        _userRepository.GetByIdAsync(user.Id).Returns(user);
 
         // Act
         // ConfigureAwait is not needed in unit testing
-        var result = await _sut.GetByIdAsync(userId);
+        var result = await _sut.GetByIdAsync(user.Id);
 
         // Assert
         result.Should().BeEquivalentTo(user);
     }
 
     [Fact]
-    public async Task GetByIdAsync_Should_ReturnNull_When_AUserDoesntExist()
+    public async Task GetByIdAsync_Should_ReturnNull_When_UserDoesntExist()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        _userRepository.GetByIdAsync(userId).ReturnsNull();
+        _userRepository.GetByIdAsync(Arg.Any<Guid>()).ReturnsNull();
 
         // Act
-        var result = await _sut.GetByIdAsync(userId);
+        var result = await _sut.GetByIdAsync(Guid.NewGuid());
 
         // Assert
         result.Should().BeNull();
@@ -133,13 +131,7 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        var user = new User()
-        {
-            Id = userId,
-            FullName = "Jarryd Deane"
-        };
-
-        _userRepository.GetByIdAsync(userId).Returns(user);
+        _userRepository.GetByIdAsync(userId).ReturnsNull();
 
         // Act
         // ConfigureAwait is not needed in unit testing
@@ -147,8 +139,8 @@ public class UserServiceTests
 
         // Assert
         Assert.Multiple(
-            () => _logger.Received(1).LogInformation(Arg.Is("Retrieving user with id: {0}"), userId),
-            () => _logger.Received(1).LogInformation(Arg.Is("User with id {0} retrieved in {1}ms"), userId, Arg.Any<long>())
+            () => _logger.Received(1).LogInformation(Arg.Is("Retrieving user with id: {0}"), Arg.Is(userId)),
+            () => _logger.Received(1).LogInformation(Arg.Is("User with id {0} retrieved in {1}ms"), Arg.Is(userId), Arg.Any<long>())
         );
     }
 
@@ -169,7 +161,7 @@ public class UserServiceTests
         Assert.Multiple(
             async () => await requestAction.Should()
                 .ThrowAsync<SqliteException>().WithMessage("Something went wrong"),
-            () => _logger.Received(1).LogError(Arg.Is(sqliteException), Arg.Is("Something went wrong while retrieving user with id {0}"), userId)
+            () => _logger.Received(1).LogError(Arg.Is(sqliteException), Arg.Is("Something went wrong while retrieving user with id {0}"), Arg.Is(userId))
         );
     }
 
@@ -177,10 +169,9 @@ public class UserServiceTests
     public async Task CreateAsync_Should_CreateUser_When_DetailsAreValid()
     {
         // Arrange
-        var userId = Guid.NewGuid();
         var user = new User()
         {
-            Id = userId,
+            Id = Guid.NewGuid(),
             FullName = "Jarryd Deane"
         };
 
@@ -197,10 +188,9 @@ public class UserServiceTests
     public async Task CreateAsync_Should_LogMessages_When_Invoked()
     {
         // Arrange
-        var userId = Guid.NewGuid();
         var user = new User()
         {
-            Id = userId,
+            Id = Guid.NewGuid(),
             FullName = "Jarryd Deane"
         };
 
@@ -211,8 +201,8 @@ public class UserServiceTests
 
         // Assert
         Assert.Multiple(
-            () => _logger.Received(1).LogInformation("Creating user with id {0} and name: {1}", userId, user.FullName),
-            () => _logger.Received(1).LogInformation("User with id {0} created in {1}ms", userId, Arg.Any<long>())
+            () => _logger.Received(1).LogInformation("Creating user with id {0} and name: {1}", Arg.Is(user.Id), Arg.Is(user.FullName)),
+            () => _logger.Received(1).LogInformation("User with id {0} created in {1}ms", Arg.Is(user.Id), Arg.Any<long>())
         );
     }
 
@@ -250,7 +240,6 @@ public class UserServiceTests
         // Act
         var result = await _sut.DeleteByIdAsync(userId);
 
-
         // Assert
         result.Should().BeTrue();
     }
@@ -259,11 +248,10 @@ public class UserServiceTests
     public async void DeleteByIdAsync_Should_NotDeleteUser_When_UserDoesntExist()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        _userRepository.DeleteByIdAsync(userId).Returns(false);
+        _userRepository.DeleteByIdAsync(Arg.Any<Guid>()).Returns(false);
 
         // Act
-        var result = await _sut.DeleteByIdAsync(userId);
+        var result = await _sut.DeleteByIdAsync(Guid.NewGuid());
 
         // Assert
         result.Should().BeFalse();
@@ -281,8 +269,8 @@ public class UserServiceTests
 
         // Assert
         Assert.Multiple(
-            () => _logger.Received(1).LogInformation("Deleting user with id: {0}", userId),
-            () => _logger.Received(1).LogInformation("User with id {0} deleted in {1}ms", userId, Arg.Any<long>())
+            () => _logger.Received(1).LogInformation("Deleting user with id: {0}", Arg.Is(userId)),
+            () => _logger.Received(1).LogInformation("User with id {0} deleted in {1}ms", Arg.Is(userId), Arg.Any<long>())
         );
     }
 
@@ -302,7 +290,7 @@ public class UserServiceTests
         Assert.Multiple(
             async () => await requestAction.Should()
                 .ThrowAsync<SqliteException>().WithMessage("Something went wrong"),
-            () => _logger.Received(1).LogError(Arg.Is(sqliteException), Arg.Is("Something went wrong while deleting user with id {0}"), userId)
+            () => _logger.Received(1).LogError(Arg.Is(sqliteException), Arg.Is("Something went wrong while deleting user with id {0}"), Arg.Is(userId))
         );
     }
 }
