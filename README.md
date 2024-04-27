@@ -31,3 +31,10 @@ NSubstitute.
 ##### RealWorld
 Learn how to test service layer and static and extention methods such 
 as logging by creating an Adapter.
+* We should not be writing unit tests for the repository layer if all we doing 
+is getting the data from the repository
+* We should also not be writing unit tests for controllers if we just passing the
+data to the client.
+	* You could write unit tests to check the appropriate status code and data is passed
+	back to the client.
+* The 2 above points should be covered with integration tests.
