@@ -92,4 +92,87 @@ public class UserControllerTests
         result.StatusCode.Should().Be(200);
         result.Value.As<IEnumerable<UserResponse>>().Should().BeEquivalentTo(usersResponse);
     }
+
+
+    [Fact]
+    public async Task Create_Should_CreateUser_When_CreateUserRequestIsValid()
+    {
+        // Arrange
+        var createUserRequest = new CreateUserRequest()
+        {
+            FullName = "Jarryd Deane"
+        };
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            FullName = createUserRequest.FullName
+        };
+        /* 
+         * Inside the _sut.Create method, a new user is created with the createUserRequest details.
+         * To solve this there are the 2 ways below
+        */
+
+        // First way (hack way) - checks that the user matches the first name and if so returns True
+        //_userService.CreateAsync(Arg.Is<User>(testUser => testUser.FullName == user.FullName)).Returns(true);
+
+        // Second way (proper way) - Takes whatever was being passed in and assigns it to my user object and then return true.
+        _userService.CreateAsync(Arg.Do<User>(testUser => user = testUser)).Returns(true);        
+
+        // Act
+        var result = (CreatedAtActionResult)await _sut.Create(createUserRequest);
+
+        // Assert
+        /* 
+         * The conversion of user happens here because of the "second way" doing a reassignment of the user object
+         * so we have to wait for the reassignment that happens inside _sut.Create before converting the 
+         * user object.
+        */
+        var userResponse = user.ToUserResponse();
+        result.StatusCode.Should().Be(201);
+        // First way
+        //result.Value.As<UserResponse>().Should().BeEquivalentTo(userResponse,
+        //    options => options.Excluding(user => user.Id));
+        // Second way
+        result.Value.As<UserResponse>().Should().BeEquivalentTo(userResponse);
+        result.RouteValues!["id"].Should().BeEquivalentTo(user.Id);
+    }
+
+    [Fact]
+    public async Task Create_Should_ReturnBadRequest_When_CreateUserRequestIsInvalid()
+    {
+        // Arrange
+        _userService.CreateAsync(Arg.Any<User>()).Returns(false);
+
+        // Act
+        var result = (BadRequestResult)await _sut.Create(new CreateUserRequest());
+
+        // Assert
+        result.StatusCode.Should().Be(400);
+    }
+
+    [Fact]
+    public async Task DeleteById_Should_ReturnOk_When_UserWasDeleted()
+    {
+        // Arrange
+        _userService.DeleteByIdAsync(Arg.Any<Guid>()).Returns(true);;
+
+        // Act
+        var result = (OkResult)await _sut.DeleteById(Guid.NewGuid());
+
+        // Assert
+        result.StatusCode.Should().Be(200);
+    }
+
+    [Fact]
+    public async Task DeleteById_Should_ReturnNotFound_When_UserWasNotDeleted()
+    {
+        // Arrange
+        _userService.DeleteByIdAsync(Arg.Any<Guid>()).Returns(false);
+
+        // Act
+        var result = (NotFoundResult)await _sut.DeleteById(Guid.NewGuid());
+
+        // Assert
+        result.StatusCode.Should().Be(404);
+    }
 }
