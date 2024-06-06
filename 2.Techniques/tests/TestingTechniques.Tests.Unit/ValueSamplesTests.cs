@@ -108,6 +108,6 @@ public sealed class ValueSamplesTests
     {
         var number = _valueSamples.InternalSecretNumber;
 
-        number.Should().Be(1);
+        number.Should().Be(42);
     }
 }
