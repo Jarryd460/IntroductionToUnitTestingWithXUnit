@@ -47,3 +47,5 @@ Learn about more advanced topics in unit testing such as:
 	* Declaring a fixure allows data to be shared across unit tests. This is good in scenarios where you want to start and tear down a database for instance.
 * Collection Fixtures
 	* A collection fixture allows you to share data across not just unit tests in a class but across classes themselves.
+* CollectionBehavior
+	* CollectionBehaviour is an attribute which allows you to set the degree of parallelism of your unit tests. This means that you can set it to run all unit tests sequentially.
