@@ -38,3 +38,8 @@ data to the client.
 	* You could write unit tests to check the appropriate status code and data is passed
 	back to the client.
 * The 2 above points should be covered with integration tests.
+
+##### AdvancedTechniques
+Learn about more advanced topics in unit testing such as:
+* Default code excution
+	* By default test cases in a class execute sequentially and classes themselves execute in parallel.
