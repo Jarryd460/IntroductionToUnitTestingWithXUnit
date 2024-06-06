@@ -53,3 +53,16 @@ Learn about more advanced topics in unit testing such as:
 	* Instead of using InlineData, you could use member data which allows you to return a dynamic IEnumerable which willl be consumed by unit test method.
 * ClassData
 	* Like MemberData, allows one to dynamically specify data to be used by unit tests for testing SUT (system under test). You could use a Faker such as Bogus to dynamically generate data.
+* Code coverage
+	* Using the coverlet console dotnet tool, you can collection the code coverage of your code.
+	* Install tool by running "dotnet tool install -g coverlet.console"
+	* Run "coverlet bin/Debug/net8.0/AdvancedTech
+niques.Tests.Unit.dll --target "dotnet" --targetargs "test
+ --no-build""
+		* Besides outputting the results to the console, you will see that a coverage.json file containing the code coverage data has also been generated in the same directory.
+	* You can also exclude certain namespaces from the coverage by running: "coverlet bin/Debug/net8.0/AdvancedTechniques.Tests.Unit.dll --target "dotnet" --targetargs "test --no-build" --exclude "[*]AdvancedTechniques*""
+	* Adjust the above accoring to your directory you executing from and the project you want to collect coverage for.
+	* With the coverlet.collector package installed, we can generate a json file in the same directory with the collection coverage data in another format (cobertura) and use that to generate a UI off it using Report Generator.
+		* Run dotnet test --collect:"XPLAT Code Coverage"
+		* Install Report Generator: dotnet tool install -g dotnet-reportgenerator-globaltool
+		* Generate Report: reportgenerator -reports:"TestResults/4681a5ec-d8d3-4a18-912c-a813914e5a9c/coverage.cobertura.xml" -targetdir:"codecoverage" -reporttypes:"html"
