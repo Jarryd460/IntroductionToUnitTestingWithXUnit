@@ -49,3 +49,5 @@ Learn about more advanced topics in unit testing such as:
 	* A collection fixture allows you to share data across not just unit tests in a class but across classes themselves.
 * CollectionBehavior
 	* CollectionBehaviour is an attribute which allows you to set the degree of parallelism of your unit tests. This means that you can set it to run all unit tests sequentially.
+* MemberData
+	* Instead of using InlineData, you could use member data which allows you to return a dynamic IEnumerable which willl be consumed by unit test method.
