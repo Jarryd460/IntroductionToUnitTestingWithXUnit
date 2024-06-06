@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Api.Tests.Unit.Applic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Api.Tests.Unit.ApiLayer", "LearningMaterial\Users.Api.Tests.Unit.ApiLayer\Users.Api.Tests.Unit.ApiLayer.csproj", "{21CE04C4-8725-4784-9612-043C5C64F210}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.AdvancedTechniques", "5.AdvancedTechniques", "{026D6D55-0CF2-48A8-9036-8570CF2A8F17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
