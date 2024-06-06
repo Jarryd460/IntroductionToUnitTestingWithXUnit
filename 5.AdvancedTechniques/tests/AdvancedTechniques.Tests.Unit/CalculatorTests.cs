@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace AdvancedTechniques.Tests.Unit;
 
 public sealed class CalculatorTests
@@ -16,11 +18,7 @@ public sealed class CalculatorTests
     }
 
     [Theory]
-    [InlineData(5, 5, 0)]
-    [InlineData(15, 5, 10)]
-    [InlineData(-5, -5, 0)]
-    [InlineData(-15, -5, -10)]
-    [InlineData(5, 10, -5)]
+    [ClassData(typeof(CalculatorSubstractTestData))]
     public void Subtract_Should_SubtractTwoNumbers_When_TwoNumbersAreIntegers(int a, int b, int expected)
     {
         // Act
@@ -37,4 +35,21 @@ public sealed class CalculatorTests
             new object[] { -5, 5, 0 },
             new object[] { -15, -5, -20 }
         };
+}
+
+internal class CalculatorSubstractTestData : IEnumerable<object[]>
+{
+    public IEnumerator<object[]> GetEnumerator()
+    {
+        yield return new object[] { 5, 5, 0 };
+        yield return new object[] { 15, 5, 10 };
+        yield return new object[] { -5, -5, 0 };
+        yield return new object[] { -15, -5, -10 };
+        yield return new object[] { 5, 10, -5 };
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }

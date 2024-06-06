@@ -51,3 +51,5 @@ Learn about more advanced topics in unit testing such as:
 	* CollectionBehaviour is an attribute which allows you to set the degree of parallelism of your unit tests. This means that you can set it to run all unit tests sequentially.
 * MemberData
 	* Instead of using InlineData, you could use member data which allows you to return a dynamic IEnumerable which willl be consumed by unit test method.
+* ClassData
+	* Like MemberData, allows one to dynamically specify data to be used by unit tests for testing SUT (system under test). You could use a Faker such as Bogus to dynamically generate data.
