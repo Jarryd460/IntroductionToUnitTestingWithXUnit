@@ -42,4 +42,6 @@ data to the client.
 ##### AdvancedTechniques
 Learn about more advanced topics in unit testing such as:
 * Default code excution
-	* By default test cases in a class execute sequentially and classes themselves execute in parallel.
+	* By default test cases in a class execute sequentially and classes themselves execute in parallel. Data is not shared among test cases and they each get their own instance of the class and it's data.
+* Class Fixtures
+	* Declaring a fixure allows data to be shared across unit tests. This is good in scenarios where you want to start and tear down a database for instance.
